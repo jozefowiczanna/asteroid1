@@ -5,8 +5,11 @@ pygame.init()
 display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Asteroids")
 
-# create a surface
-test_surf = pygame.Surface((400,100))
+bg_surf = pygame.image.load('asteroid/graphics/background.png').convert()
+ship_surf = pygame.image.load('asteroid/graphics/ship.png').convert_alpha()
+
+font = pygame.font.Font('asteroid/graphics/subatomic.ttf', 50)
+text_surf = font.render('Space', True, (255,255,255))
 
 while True:
     for event in pygame.event.get():
@@ -14,8 +17,10 @@ while True:
             pygame.quit()
             sys.exit()
 
-    display_surface.fill((20,120,250))
-    test_surf.fill((0,200,20))
-    display_surface.blit(test_surf, (WINDOW_WIDTH - test_surf.get_width(),0))
+    display_surface.fill((100,100,100))
+    display_surface.blit(bg_surf, (0,0))
+    display_surface.blit(ship_surf, (100,50))
+    display_surface.blit(text_surf, (400,300))
     pygame.display.update()
+
     
