@@ -16,6 +16,6 @@ while True:
 
     display_surface.fill((20,120,250))
     test_surf.fill((0,200,20))
-    display_surface.blit(test_surf, (0,0))
+    display_surface.blit(test_surf, (WINDOW_WIDTH - test_surf.get_width(),0))
     pygame.display.update()
     
