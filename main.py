@@ -7,11 +7,13 @@ pygame.display.set_caption("Asteroids")
 clock = pygame.time.Clock()
 
 ship_y_pos = 500
-bg_surf = pygame.image.load('asteroid/graphics/background.png').convert()
-ship_surf = pygame.image.load('asteroid/graphics/ship.png').convert_alpha()
+bg_surf = pygame.image.load('asteroid/asteroid1/graphics/background.png').convert()
+ship_surf = pygame.image.load('asteroid/asteroid1/graphics/ship.png').convert_alpha()
+ship_rect = ship_surf.get_rect(center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2))
 
-font = pygame.font.Font('asteroid/graphics/subatomic.ttf', 50)
+font = pygame.font.Font('asteroid/asteroid1/graphics/subatomic.ttf', 50)
 text_surf = font.render('Space', True, (255,255,255))
+text_rect = text_surf.get_rect(midbottom = (WINDOW_WIDTH/2, WINDOW_HEIGHT))
 
 while True:
 
@@ -27,7 +29,10 @@ while True:
     # 2. updates
     display_surface.fill((100,100,100))
     display_surface.blit(bg_surf, (0,0))
-    ship_y_pos -= 4
-    display_surface.blit(ship_surf, (100,ship_y_pos))
-    display_surface.blit(text_surf, (400,300))
+    # if the top of the ship is at the top of the window -> stop the movement
+    if ship_rect.top >= 0: 
+        # ship_rect.y >= 0:
+        ship_rect.y -= 4
+    display_surface.blit(ship_surf, ship_rect)
+    display_surface.blit(text_surf, text_rect)
     pygame.display.update()
