@@ -6,7 +6,6 @@ display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption("Asteroids")
 clock = pygame.time.Clock()
 
-ship_y_pos = 500
 bg_surf = pygame.image.load('asteroid/asteroid1/graphics/background.png').convert()
 ship_surf = pygame.image.load('asteroid/asteroid1/graphics/ship.png').convert_alpha()
 ship_rect = ship_surf.get_rect(center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2))
@@ -26,13 +25,13 @@ while True:
     # framerate limit
     clock.tick(120)
 
+    # mouse input
+    # place the ship on the mouse position while using the methods
+    ship_rect.center = pygame.mouse.get_pos()
     # 2. updates
     display_surface.fill((100,100,100))
     display_surface.blit(bg_surf, (0,0))
     # if the top of the ship is at the top of the window -> stop the movement
-    if ship_rect.top >= 0: 
-        # ship_rect.y >= 0:
-        ship_rect.y -= 4
     display_surface.blit(ship_surf, ship_rect)
     display_surface.blit(text_surf, text_rect)
     pygame.display.update()
