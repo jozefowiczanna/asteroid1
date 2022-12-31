@@ -1,5 +1,11 @@
 import pygame, sys
 
+def laser_update(laser_list, speed = 300):
+    for rect in laser_list:
+        rect.y -= round(dt * speed)
+        if rect.bottom < 0:
+            laser_list.remove(rect)
+
 # game init
 pygame.init()
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280, 720
@@ -21,7 +27,7 @@ text_rect = text_surf.get_rect(midbottom = (WINDOW_WIDTH/2, WINDOW_HEIGHT - 50))
 
 # laser import
 laser_surf = pygame.image.load('../asteroid1/graphics/laser.png').convert_alpha()
-laser_rect = laser_surf.get_rect(midbottom = ship_rect.midtop)
+laser_list = []
 
 # drawing
 test_rect = pygame.Rect(100, 200, 300, 400)
@@ -32,6 +38,9 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            laser_rect = laser_surf.get_rect(midbottom = ship_rect.midtop)
+            laser_list.append(laser_rect)
 
     # framerate limit
     dt = clock.tick(120) / 1000
@@ -40,17 +49,15 @@ while True:
     ship_rect.center = pygame.mouse.get_pos()
 
     # update
-    laser_rect.y -= round(200*dt)
+    laser_update(laser_list)
 
     # drawing
     display_surface.fill((100,100,100))
     display_surface.blit(bg_surf, (0,0))
     display_surface.blit(ship_surf, ship_rect)
     display_surface.blit(text_surf, text_rect)
-    display_surface.blit(laser_surf, laser_rect)
-
-    pygame.draw.rect(display_surface,'white',text_rect.inflate(30,30),width=5,border_radius=10)
-    pygame.draw.lines(display_surface,'pink',True,[(300,50),(700,100),(600,200)],width=5)
+    for laser_rect in laser_list:
+        display_surface.blit(laser_surf, laser_rect)
 
     # draw the final frame
     pygame.display.update()
