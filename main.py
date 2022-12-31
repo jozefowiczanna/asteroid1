@@ -8,19 +8,19 @@ pygame.display.set_caption("Asteroids")
 clock = pygame.time.Clock()
 
 # background
-bg_surf = pygame.image.load('asteroid/asteroid1/graphics/background.png').convert()
+bg_surf = pygame.image.load('../asteroid1/graphics/background.png').convert()
 
 # ship import
-ship_surf = pygame.image.load('asteroid/asteroid1/graphics/ship.png').convert_alpha()
+ship_surf = pygame.image.load('../asteroid1/graphics/ship.png').convert_alpha()
 ship_rect = ship_surf.get_rect(center = (WINDOW_WIDTH/2,WINDOW_HEIGHT/2))
 
 # text import
-font = pygame.font.Font('asteroid/asteroid1/graphics/subatomic.ttf', 50)
+font = pygame.font.Font('../asteroid1/graphics/subatomic.ttf', 50)
 text_surf = font.render('Space', True, (255,255,255))
 text_rect = text_surf.get_rect(midbottom = (WINDOW_WIDTH/2, WINDOW_HEIGHT - 50))
 
 # laser import
-laser_surf = pygame.image.load('asteroid/asteroid1/graphics/laser.png').convert_alpha()
+laser_surf = pygame.image.load('../asteroid1/graphics/laser.png').convert_alpha()
 laser_rect = laser_surf.get_rect(midbottom = ship_rect.midtop)
 
 # drawing
@@ -34,13 +34,13 @@ while True:
             sys.exit()
 
     # framerate limit
-    clock.tick(120)
+    dt = clock.tick(120) / 1000
 
     # mouse input
     ship_rect.center = pygame.mouse.get_pos()
 
     # update
-    laser_rect.y -= 4
+    laser_rect.y -= round(200*dt)
 
     # drawing
     display_surface.fill((100,100,100))
